@@ -9,13 +9,12 @@ export default async function handler(req, res) {
         }
         if (req.method === 'POST') {
             const { nome } = req.body;
-            if (!nome) return res.status(400).json({ error: "Nome é obrigatório" });
             await sql`INSERT INTO presenca (nome) VALUES (${nome})`;
-            return res.status(201).json({ message: 'Presença confirmada!' });
+            return res.status(201).json({ message: 'Confirmado' });
         }
         if (req.method === 'DELETE') {
-            // Apenas para o admin limpar a lista se desejar
-            await sql`DELETE FROM presenca WHERE id = ${req.query.id}`;
+            const { id } = req.query;
+            await sql`DELETE FROM presenca WHERE id = ${id}`;
             return res.status(200).json({ message: 'Removido' });
         }
     } catch (error) {

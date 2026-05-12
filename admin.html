@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Lista de Presença</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Gestão de Convidados</h1>
+      <p>Insira a senha para ver quem confirmou presença.</p>
+    </header>
+
+    <section class="card">
+      <div class="admin-row">
+        <input id="adminPassword" type="password" placeholder="Senha" aria-label="Senha">
+        <button id="adminAccessButton" type="button">Entrar</button>
+      </div>
+      <p id="adminMessage" class="success-msg"></p>
+    </section>
+
+    <section id="adminContent" class="card hidden">
+      <h2>Pessoas Confirmadas</h2>
+      <ul id="adminGuestList" class="attendance-list">
+        </ul>
+    </section>
+
+    <footer>
+      <p><a href="index.html" style="color: var(--primary); text-decoration: none;">Voltar para Confirmação</a></p>
+    </footer>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>
