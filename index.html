@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Presença</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Confirmar Presença</h1>
+      <p>Por favor, digite o seu nome para confirmar que você virá!</p>
+    </header>
+
+    <section class="card">
+      <form id="attendanceForm">
+        <input type="text" id="guestName" placeholder="Seu nome completo" required>
+        <button type="submit">Confirmar Minha Ida 🚀</button>
+      </form>
+      <p id="msg" class="hidden"></p>
+    </section>
+
+    <section class="card">
+      <h2>Quem já confirmou:</h2>
+      <ul id="guestList" class="attendance-list">
+        </ul>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

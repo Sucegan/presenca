@@ -1,0 +1,57 @@
+/* Reutilizando as cores do projeto anterior para combinar */
+:root {
+  --bg: #060912;
+  --primary: #3ae8ff;
+  --accent: #7d5cff;
+  --text: #e8f7ff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container { max-width: 500px; width: 100%; }
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid rgba(58, 232, 255, 0.2);
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #000;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.attendance-list { list-style: none; padding: 0; }
+.guest-item {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.success-msg { color: #00ff88; margin-top: 10px; text-align: center; }
