@@ -14,21 +14,24 @@
     </header>
 
     <section class="card">
-      <div class="admin-row">
-        <input id="adminPassword" type="password" placeholder="Senha" aria-label="Senha">
-        <button id="adminAccessButton" type="button">Entrar</button>
+      <div class="admin-row" style="display: flex; gap: 10px;">
+        <input id="adminPassword" type="password" placeholder="Senha" aria-label="Senha" style="margin-bottom: 0;">
+        <button id="adminAccessButton" type="button" style="width: auto;">Entrar</button>
       </div>
       <p id="adminMessage" class="success-msg"></p>
     </section>
 
     <section id="adminContent" class="card hidden">
       <h2>Pessoas Confirmadas</h2>
+      <p style="margin-bottom: 15px;">Total: <strong id="guestCountDisplay">0</strong></p>
       <ul id="adminGuestList" class="attendance-list">
-        </ul>
+      </ul>
     </section>
 
     <footer>
-      <p><a href="index.html" style="color: var(--primary); text-decoration: none;">Voltar para Confirmação</a></p>
+      <p style="text-align: center; margin-top: 20px;">
+        <a href="index.html" style="color: var(--primary); text-decoration: none;">Voltar para Confirmação</a>
+      </p>
     </footer>
   </main>
   <script src="admin.js"></script>
