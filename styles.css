@@ -1,30 +1,31 @@
 /* =========================================
-   ESTILO COUNTRY / RÚSTICO
-   Churrasco do Sucegan 🤠
+   ESTILO COUNTRY PADRONIZADO 🤠
+   Churrasco do Sucegan
    ========================================= */
 
 :root {
-  /* Paleta de Cores Terra e Couro */
-  --bg-body: #f4eade;          /* Bege Claro Papel Envelhecido */
+  /* Paleta de Cores "Old West" */
+  --bg-body: #f5f1ea;          /* Papel envelhecido claro */
   --bg-card: #ffffff;
-  --primary: #8b4513;        /* SaddleBrown (Couro Selado) */
-  --primary-hover: #a0522d;   /* Sienna (Couro Mais Claro) */
-  --accent: #d2b48c;         /* Tan (Palha/Corda) */
-  --text-main: #3e2723;       /* Marrom Escuro Café */
-  --text-light: #6d4c41;
-  --danger: #b71c1c;         /* Vermelho Bandana */
+  --primary: #5d4037;          /* Marrom Couro Escuro (melhor contraste) */
+  --primary-hover: #3e2723;    /* Café bem escuro */
+  --accent: #c2b280;           /* Tom de palha/corda */
+  --text-main: #2c1b0e;        /* Marrom quase preto para leitura */
+  --text-light: #795548;       /* Marrom médio para detalhes */
+  --danger: #8b0000;           /* Vermelho queimado (Bandana) */
   --border-card: #d7ccc8;
   
-  /* Fontes */
-  --font-heading: 'Rye', cursive; /* Estilo Western para Títulos */
-  --font-body: 'Lora', serif;       /* Serifada elegante para texto */
+  /* Tipografia Padronizada */
+  --font-heading: 'Rye', cursive; /* Títulos Western */
+  --font-body: 'Lora', serif;      /* Corpo de texto elegante */
 }
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Custom Scrollbar Rústico */
+/* --- Custom Scrollbar Rústico --- */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -42,10 +43,11 @@
 
 body {
   background-color: var(--bg-body);
-  /* Adiciona uma textura leve de papel/tecido ao fundo */
-  background-image: url('https://www.transparenttextures.com/patterns/dark-dotted.png');
+  /* Textura sutil de papel/tecido para reforçar o tema */
+  background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
   color: var(--text-main);
   font-family: var(--font-body);
+  line-height: 1.6;
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -66,96 +68,111 @@ header {
   margin-bottom: 20px;
 }
 
+/* --- Títulos Padronizados --- */
 h1, h2, h3 {
   font-family: var(--font-heading);
-  font-weight: 400; /* Rye não tem negrito */
   color: var(--primary);
-  margin-top: 0;
+  text-align: center;
+  text-transform: uppercase;
   letter-spacing: 1px;
+  margin-top: 0;
 }
 
-h1 {
-  font-size: 2.2rem;
-  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-}
+h1 { font-size: 2rem; margin-bottom: 0.5rem; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
+h2 { font-size: 1.4rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
-h2 {
-  font-size: 1.5rem;
-  border-bottom: 2px solid var(--accent);
-  display: inline-block;
-  padding-bottom: 5px;
-  margin-bottom: 15px;
-}
+p { margin-bottom: 10px; }
+strong { color: #000; }
 
-p {
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-
-strong {
-  color: #000;
-}
-
+/* --- Cards Estilo "Procurado" --- */
 .card {
   background: var(--bg-card);
   padding: 25px;
-  border-radius: 8px; /* Menos arredondado que o moderno */
-  border: 1px solid var(--border-card);
-  /* Sombra mais seca, parecendo papel sobreposto */
-  box-shadow: 3px 3px 0px rgba(139, 69, 19, 0.1);
-  margin-bottom: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 4px; /* Cantos secos para parecer madeira/papel */
+  border: 2px solid var(--border-card);
+  box-shadow: 6px 6px 0px rgba(93, 64, 55, 0.1); /* Sombra rígida rústica */
+  margin-bottom: 25px;
   position: relative;
-  overflow: hidden;
-}
-
-/* Detalhe rústico no canto do card */
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--primary),
-    var(--primary) 10px,
-    var(--accent) 10px,
-    var(--accent) 20px
-  );
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 5px 5px 0px rgba(139, 69, 19, 0.15);
+  box-shadow: 8px 8px 0px rgba(93, 64, 55, 0.15);
 }
 
-.hidden {
-  display: none !important;
+/* Detalhe de borda rústica no topo */
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 5px;
+  background: repeating-linear-gradient(90deg, var(--primary), var(--primary) 10px, var(--accent) 10px, var(--accent) 20px);
 }
 
-/* Inputs Estilo Escrito à Mão */
+/* --- Formulários e Inputs --- */
 input {
   width: 100%;
-  padding: 14px;
-  border-radius: 4px;
+  padding: 12px 15px;
   border: 2px solid var(--accent);
-  background: #fff;
-  color: var(--text-main);
-  font-size: 1rem;
+  border-radius: 4px;
   font-family: var(--font-body);
-  outline: none;
-  transition: all 0.2s ease;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: var(--text-main);
+  transition: all 0.3s ease;
 }
 
 input:focus {
   border-color: var(--primary);
-  background: #fafafa;
+  outline: none;
+  background-color: #fffdfa;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Companions Section */
+::placeholder { color: #a1887f; opacity: 0.7; }
+
+/* --- Botões Estilo "Carimbo" --- */
+button, .link-button {
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  padding: 15px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0 var(--primary-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+button:hover, .link-button:hover {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--primary-hover);
+  background: var(--primary-hover);
+}
+
+.small-button {
+  width: auto;
+  padding: 8px 15px;
+  font-size: 0.85rem;
+}
+
+.link-button-faint {
+  background: #eae0d5; color: var(--primary);
+  border: 2px solid var(--accent); box-shadow: none;
+}
+.link-button-faint:hover {
+  background: var(--accent); color: var(--primary); border-color: var(--primary);
+}
+
+/* --- Lógica de Acompanhantes (Switch e Lista) --- */
 .companions-choice {
   display: flex;
   align-items: center;
@@ -163,7 +180,7 @@ input:focus {
   gap: 12px;
   padding: 15px;
   border-radius: 4px;
-  background: #fdf8f3;
+  background: #fdfaf5;
   border: 1px solid var(--accent);
   margin-bottom: 15px;
   margin-top: 15px;
@@ -174,7 +191,7 @@ input:focus {
   color: var(--primary);
 }
 
-/* Switch Rústico (Cores de Couro) */
+/* Switch Rústico */
 .switch {
   position: relative;
   display: inline-block;
@@ -192,19 +209,16 @@ input:focus {
   background: #fff; transition: 0.4s; border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-input:checked + .slider {
-  background: var(--primary);
-}
+input:checked + .slider { background: var(--primary); }
 input:checked + .slider:before { transform: translateX(24px); }
 
-/* Ajuste área de acompanhantes */
+/* Animação do campo de acompanhantes */
 .companion-name-field {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
   transition: all 0.4s ease-in-out;
 }
-
 .companion-name-field.show {
   opacity: 1;
   max-height: 500px;
@@ -218,10 +232,7 @@ input:checked + .slider:before { transform: translateX(24px); }
   align-items: center;
   width: 100%;
 }
-
-.input-container input {
-  padding-right: 50px !important;
-}
+.input-container input { padding-right: 50px !important; }
 
 .add-button {
   position: absolute;
@@ -238,115 +249,55 @@ input:checked + .slider:before { transform: translateX(24px); }
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
+  box-shadow: none; /* Remove a sombra do botão padrão aqui */
 }
-.add-button:hover { background: var(--primary); color: #fff; }
+.add-button:hover { background: var(--primary); color: #fff; transform: translateY(-50%); }
 
-.companion-list {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
+.companion-list { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; }
 .companion-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  background: #fdf8f3;
-  border-radius: 4px;
-  border: 1px solid var(--accent);
-  font-size: 0.95rem;
-  color: var(--text-main);
-  animation: fadeIn 0.3s ease;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 15px; background: #fdfaf5; border-radius: 4px;
+  border: 1px solid var(--accent); font-size: 0.95rem; animation: fadeIn 0.3s ease;
 }
 
 .remove-companion {
   background: none; border: none; color: var(--danger);
-  font-size: 1.2rem; cursor: pointer; padding: 0; margin-left: 10px;
+  font-size: 1.2rem; cursor: pointer; padding: 0; margin-left: 10px; width: auto; box-shadow: none;
 }
-.remove-companion:hover { transform: scale(1.1); }
+.remove-companion:hover { transform: scale(1.1); background: none; box-shadow: none; }
 
-/* Botões Estilo Ferradura/Carimbo */
-button, .link-button {
-  display: inline-flex; justify-content: center; align-items: center;
-  width: 100%; padding: 16px 20px; 
-  border-radius: 4px;
-  background: var(--primary);
-  border: none; 
-  color: #fff; 
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-  cursor: pointer;
-  text-decoration: none; transition: 0.2s;
-  box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-  text-transform: uppercase;
-}
-button:hover, .link-button:hover {
-  background: var(--primary-hover);
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-}
-
-.link-button-faint {
-  background: #eae0d5; color: var(--primary);
-  border: 2px solid var(--accent); box-shadow: none;
-}
-.link-button-faint:hover {
-  background: var(--accent); color: var(--primary); border-color: var(--primary);
-}
-
-.small-button { width: auto; padding: 10px 18px; font-size: 0.9rem; }
-
-.danger {
-  background: var(--danger);
-}
-.danger:hover { background: #8e0000; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Invitation Card e Countdown Rústico */
+/* --- Elementos Específicos (Lembretes e Countdown) --- */
 .invitation-card {
-  background-color: #fffaf0; /* FloralWhite */
-  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern-light.png'); /* Textura leve madeira */
-  border: 2px solid var(--primary);
+  background-color: #fffaf0; 
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern-light.png'); 
   text-align: center;
   padding: 30px;
 }
 
-.invitation-card h2 { margin-bottom: 15px; }
-
-.countdown { display: flex; justify-content: center; gap: 8px; margin-top: 25px; flex-wrap: wrap; }
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  text-align: center;
+  margin-top: 25px;
+}
 .countdown div {
-  background: rgba(139, 69, 19, 0.05); /* Fundo marrom bem claro */
-  padding: 10px; border-radius: 4px;
-  min-width: 70px; 
+  background: #fdfaf5;
   border: 1px solid var(--accent);
-}
-.countdown span { 
-  font-family: var(--font-heading);
-  font-size: 1.8rem; 
-  color: var(--primary); 
-  display: block;
-}
-.countdown br + text { /* Texto abaixo do número */
-  font-size: 0.8rem;
+  padding: 10px 5px;
+  border-radius: 4px;
   color: var(--text-light);
+  font-size: 0.8rem;
   text-transform: uppercase;
 }
+.countdown span {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--primary);
+}
 
-/* Admin List */
+/* --- Área Administrativa --- */
 .admin-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;}
 .admin-summary { font-size: 0.95rem; margin-bottom: 20px; color: var(--text-light); border-left: 3px solid var(--accent); padding-left: 10px; }
 .admin-summary strong { color: var(--primary); font-size: 1.1rem; }
@@ -355,39 +306,42 @@ button:hover, .link-button:hover {
 
 .attendance-list { list-style: none; padding: 0; margin: 0; }
 .attendance-list li {
-  background: #fff; padding: 15px; border-radius: 4px;
-  border: 1px solid var(--border-card); margin-bottom: 10px;
-  display: flex; justify-content: space-between; align-items: center;
+  background: #fffdfa;
+  border: 1px solid var(--border-card);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   transition: 0.2s;
 }
-.attendance-list li:hover { background: #fdf8f3; border-color: var(--accent); }
+.attendance-list li:hover { background: #fdfaf5; border-color: var(--accent); }
+.attendance-list li strong { font-family: var(--font-body); font-size: 1.1rem; color: var(--text-main); }
+.attendance-list li small { color: var(--text-light); display: block; margin-top: 3px; }
 
-.attendance-list li strong {
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  color: var(--text-main);
-}
-.attendance-list li small {
-  color: var(--text-light);
-  display: block;
-  margin-top: 3px;
-}
+/* --- Utilitários e Mensagens --- */
+.hidden { display: none !important; }
+.danger { background: var(--danger); box-shadow: 0 4px 0 #5f0000; }
+.danger:hover { background: #5f0000; }
 
 .success-msg { color: #2e7d32; text-align: center; margin-top: 15px; font-weight: bold; }
 .error-msg { color: var(--danger); text-align: center; margin-top: 15px; font-weight: bold; }
 .footer-note { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 30px; opacity: 0.8; }
 
-/* Placeholder color */
-::placeholder { color: #a1887f; opacity: 0.7; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* Responsividade */
+/* --- Responsividade --- */
 @media (max-width: 600px) {
   body { padding: 10px; }
+  h1 { font-size: 1.6rem; }
   .card { padding: 15px; }
   .admin-controls { flex-direction: column; gap: 5px; }
   .admin-controls button { width: 100%; }
   .attendance-list li { flex-direction: column; align-items: flex-start; gap: 10px; }
   .attendance-list li button { width: 100%; }
-  .countdown div { min-width: 60px; padding: 8px; }
-  h1 { font-size: 1.8rem; }
+  .countdown span { font-size: 1.2rem; }
 }

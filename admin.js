@@ -104,3 +104,23 @@ document.getElementById('refreshButton').onclick = () => {
     document.getElementById('guestSearch').value = ''; // Limpa a busca
     console.log('Lista atualizada!');
 };
+
+async function loadAttendanceAdmin() {
+    try {
+        const response = await fetch('/api/guests');
+        const guests = await response.json();
+        
+        // Mapeamos os nomes do banco para o formato que seu renderList espera
+        const formattedGuests = guests.map(g => ({
+            id: g.id,
+            nome: g.nome,
+            companionNames: typeof g.acompanhantes === 'string' 
+                ? JSON.parse(g.acompanhantes) 
+                : g.acompanhantes
+        }));
+
+        renderList(formattedGuests);
+    } catch (error) {
+        console.error("Erro ao carregar lista:", error);
+    }
+}
