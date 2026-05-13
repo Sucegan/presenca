@@ -21,6 +21,50 @@ function showMessage(text, isError = false) {
 
   setTimeout(() => msg.classList.add('hidden'), 6000);
 }
+// CONTADOR REVISADO
+function startCountdown() {
+  // Usar o formato YYYY/MM/DD evita problemas de fuso horário em alguns navegadores
+  const eventDate = new Date('2026/05/16 19:30:00').getTime();
+  
+  const format = (num) => String(num).padStart(2, '0');
+
+  const update = () => {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+
+    // Seleciona os elementos (garantindo que existem na página)
+    const d = document.getElementById('days');
+    const h = document.getElementById('hours');
+    const m = document.getElementById('minutes');
+    const s = document.getElementById('seconds');
+
+    if (!d || !h || !m || !s) return;
+
+    if (distance < 0) {
+      const countdownEl = document.querySelector('.countdown');
+      if (countdownEl) countdownEl.innerHTML = "<h3>O Churrasco começou! 🎸</h3>";
+      return;
+    }
+
+    // Cálculos
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Atualiza o HTML
+    d.innerText = format(days);
+    h.innerText = format(hours);
+    m.innerText = format(minutes);
+    s.innerText = format(seconds);
+  };
+
+  update(); // Roda uma vez imediatamente
+  setInterval(update, 1000); // Depois roda a cada segundo
+}
+
+// Garante que o contador inicie apenas quando a página carregar
+document.addEventListener('DOMContentLoaded', startCountdown);
 
 // Atualiza a lista de acompanhantes na tela
 function renderCompanionList() {
@@ -133,15 +177,21 @@ form.onsubmit = async (e) => {
   }
 };
 
-// ENVIO PARA O BACKEND (Neon + Vercel)
 form.onsubmit = async (e) => {
   e.preventDefault();
   const submitBtn = form.querySelector('button[type="submit"]');
   const nomeConvidado = document.getElementById('guestName').value.trim();
+  const acompanhanteRestante = companionInput.value.trim();
 
   if (!nomeConvidado) return;
 
-  // Bloqueia o botão para evitar cliques duplos
+  // SALVA AUTOMATICAMENTE: Se o campo de acompanhante tiver texto, adiciona à lista antes de enviar
+  if (acompanhanteRestante && companionToggle.checked) {
+    if (!companionNames.includes(acompanhanteRestante)) {
+      companionNames.push(acompanhanteRestante);
+    }
+  }
+
   submitBtn.disabled = true;
   submitBtn.textContent = 'Enviando para o rancho...';
 
@@ -151,30 +201,28 @@ form.onsubmit = async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nome: nomeConvidado,
-        companionNames: companionNames
+        companionNames: companionNames // Aqui já vai incluir o nome automático
       })
     });
 
-    if (!response.ok) throw new Error();
+    if (!response.ok) throw new Error('Erro na resposta do servidor');
 
-    // Sucesso!
     showMessage(`Confirmado! Esperamos você, ${nomeConvidado.split(' ')[0]}! 🥩`);
     
-    // Reseta tudo
+    // Limpeza total
     form.reset();
     companionNames = [];
+    companionInput.value = ''; // Limpa o campo de texto do acompanhante
     renderCompanionList();
     companionNameField.classList.remove('show');
     companionToggle.checked = false;
     
   } catch (error) {
-    showMessage('Erro ao salvar. Verifique sua conexão ou tente novamente.', true);
+    showMessage('Erro ao salvar. Verifique sua conexão.', true);
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Confirmar Presença';
   }
 };
-
-
 
 document.addEventListener('DOMContentLoaded', startCountdown);

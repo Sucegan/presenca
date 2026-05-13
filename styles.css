@@ -171,21 +171,49 @@ button:hover, .link-button:hover {
 .link-button-faint:hover {
   background: var(--accent); color: var(--primary); border-color: var(--primary);
 }
-
-/* --- Lógica de Acompanhantes (Switch e Lista) --- */
-.companions-choice {
+/* --- Lógica de Acompanhantes Atualizada --- */
+.input-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 15px;
-  border-radius: 4px;
-  background: #fdfaf5;
-  border: 1px solid var(--accent);
+  gap: 8px; /* Espaço entre o campo e o botão */
+  width: 100%;
+  align-items: stretch; /* Faz o botão ter a mesma altura do input */
   margin-bottom: 15px;
-  margin-top: 15px;
 }
 
+.input-container input {
+  flex: 1; /* Ocupa o máximo de espaço possível */
+  min-width: 0; /* Evita que o input empurre o botão para fora em telas pequenas */
+  margin-bottom: 0 !important; /* Remove a margem de baixo para alinhar com o botão */
+}
+
+.add-button {
+  /* Removemos o position absolute anterior */
+  position: static; 
+  transform: none;
+  
+  width: 48px; 
+  height: 48px;
+  flex-shrink: 0; /* Impede o botão de amassar */
+  
+  background: var(--accent);
+  color: var(--primary);
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 var(--primary-hover); /* Mantém o estilo de carimbo */
+}
+
+.add-button:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--primary-hover);
+}
 .companions-choice span {
   font-weight: bold;
   color: var(--primary);
