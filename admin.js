@@ -1,13 +1,12 @@
 const adminCode = 'gamepass';
-const STORAGE_KEY = 'presencaList';
 
-// Elementos
 const loginSection = document.getElementById('loginSection');
 const adminContent = document.getElementById('adminContent');
 const passwordInput = document.getElementById('adminPasswordInput');
 const loginButton = document.getElementById('loginButton');
 const adminGuestList = document.getElementById('adminGuestList');
-const adminMessage = document.getElementById('adminMessage');
+
+let currentGuests = []; // Variável para armazenar os dados vindos do banco
 
 // Função de Login
 function checkLogin() {
@@ -25,25 +24,38 @@ function checkLogin() {
 loginButton.onclick = checkLogin;
 passwordInput.onkeypress = (e) => { if(e.key === 'Enter') checkLogin(); };
 
-function loadAttendanceAdmin() {
-    const guests = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    renderList(guests);
+// BUSCA DADOS DO BANCO (NEON + VERCEL)
+async function loadAttendanceAdmin() {
+    try {
+        const response = await fetch('/api/guests');
+        const guestsFromDB = await response.json();
+        
+        // Trata os dados do Postgres
+        currentGuests = guestsFromDB.map(g => ({
+            id: g.id,
+            nome: g.nome,
+            companionNames: typeof g.acompanhantes === 'string' 
+                ? JSON.parse(g.acompanhantes) 
+                : (g.acompanhantes || [])
+        }));
+
+        renderList(currentGuests);
+    } catch (error) {
+        console.error("Erro ao carregar lista:", error);
+    }
 }
 
 function renderList(guests) {
     adminGuestList.innerHTML = '';
-    let totalPeople = 0; // Variável para o cálculo total
+    let totalPeople = 0; 
 
     guests.forEach(g => {
-        // Soma 1 (o convidado) + a quantidade de acompanhantes
         totalPeople += 1;
         if (g.companionNames && g.companionNames.length > 0) {
             totalPeople += g.companionNames.length;
         }
 
         const li = document.createElement('li');
-        li.style.padding = '10px';
-        li.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
         li.innerHTML = `
             <div>
                 <strong>${g.nome}</strong><br>
@@ -54,24 +66,32 @@ function renderList(guests) {
         adminGuestList.appendChild(li);
     });
 
-    // Atualiza os displays de contagem
     document.getElementById('guestCountDisplay').textContent = guests.length;
     document.getElementById('totalPeopleDisplay').textContent = totalPeople;
 }
 
-window.removeGuest = (id) => {
-    if(!confirm('Remover convidado?')) return;
-    let guests = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    guests = guests.filter(g => g.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
-    loadAttendanceAdmin();
+// DELETA DO BANCO DE DADOS
+window.removeGuest = async (id) => {
+    if(!confirm('Remover convidado permanentemente?')) return;
+    
+    try {
+        await fetch('/api/guests', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        // Recarrega a lista após deletar
+        loadAttendanceAdmin();
+    } catch(e) {
+        console.error(e);
+        alert("Erro ao remover do banco de dados.");
+    }
 };
 
-// Exportar CSV corrigido para acentos
+// EXPORTAR CSV
 document.getElementById('exportButton').onclick = () => {
-    const guests = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const csvHeader = '\uFEFFNome,Acompanhantes\n'; // \uFEFF resolve erros de acento no Excel
-    const csvRows = guests.map(g => `"${g.nome}","${g.companionNames.join('; ')}"`).join('\n');
+    const csvHeader = '\uFEFFNome,Acompanhantes\n'; 
+    const csvRows = currentGuests.map(g => `"${g.nome}","${g.companionNames.join('; ')}"`).join('\n');
     
     const blob = new Blob([csvHeader + csvRows], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -83,14 +103,12 @@ document.getElementById('exportButton').onclick = () => {
 document.getElementById('logoutButton').onclick = () => {
     location.reload();
 };
-// --- Adicione isso ao seu admin.js ---
 
-// Lógica de Busca em tempo real
+// Lógica de Busca na página
 document.getElementById('guestSearch').addEventListener('input', (e) => {
     const termo = e.target.value.toLowerCase();
-    const guests = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     
-    const filtrados = guests.filter(g => 
+    const filtrados = currentGuests.filter(g => 
         g.nome.toLowerCase().includes(termo) || 
         g.companionNames.some(c => c.toLowerCase().includes(termo))
     );
@@ -98,29 +116,8 @@ document.getElementById('guestSearch').addEventListener('input', (e) => {
     renderList(filtrados);
 });
 
-// Lógica do botão Atualizar
+// Botão Atualizar
 document.getElementById('refreshButton').onclick = () => {
     loadAttendanceAdmin();
-    document.getElementById('guestSearch').value = ''; // Limpa a busca
-    console.log('Lista atualizada!');
+    document.getElementById('guestSearch').value = ''; 
 };
-
-async function loadAttendanceAdmin() {
-    try {
-        const response = await fetch('/api/guests');
-        const guests = await response.json();
-        
-        // Mapeamos os nomes do banco para o formato que seu renderList espera
-        const formattedGuests = guests.map(g => ({
-            id: g.id,
-            nome: g.nome,
-            companionNames: typeof g.acompanhantes === 'string' 
-                ? JSON.parse(g.acompanhantes) 
-                : g.acompanhantes
-        }));
-
-        renderList(formattedGuests);
-    } catch (error) {
-        console.error("Erro ao carregar lista:", error);
-    }
-}

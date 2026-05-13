@@ -1,4 +1,3 @@
-const STORAGE_KEY = 'presencaList';
 const form = document.getElementById('attendanceForm');
 const msg = document.getElementById('msg');
 const companionToggle = document.getElementById('companionToggle');
@@ -9,19 +8,14 @@ const companionList = document.getElementById('companionList');
 
 let companionNames = [];
 
-// Função de feedback aprimorada
 function showMessage(text, isError = false) {
   msg.textContent = text;
   msg.className = isError ? 'error-msg' : 'success-msg';
   msg.classList.remove('hidden');
-  
-  // Rolar suavemente até a mensagem
   msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  
   setTimeout(() => msg.classList.add('hidden'), 5000);
 }
 
-// Renderizar lista de acompanhantes com animação simples
 function renderCompanionList() {
   companionList.innerHTML = '';
   companionNames.forEach((name, index) => {
@@ -34,33 +28,19 @@ function renderCompanionList() {
   });
 }
 
-// Adicionar acompanhante com validação
 function handleAddCompanion() {
   const name = companionInput.value.trim();
-  
-  if (!name) {
-    companionInput.focus();
-    return;
-  }
-
-  if (companionNames.includes(name)) {
-    alert('Este nome já foi adicionado como acompanhante!');
-    return;
-  }
-
+  if (!name) { companionInput.focus(); return; }
+  if (companionNames.includes(name)) { alert('Este nome já foi adicionado!'); return; }
   companionNames.push(name);
   companionInput.value = '';
   renderCompanionList();
   companionInput.focus();
 }
 
-// Eventos para adicionar acompanhante
 addCompanion.addEventListener('click', handleAddCompanion);
 companionInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    handleAddCompanion();
-  }
+  if (e.key === 'Enter') { e.preventDefault(); handleAddCompanion(); }
 });
 
 window.removeCompanion = function(index) {
@@ -68,7 +48,6 @@ window.removeCompanion = function(index) {
   renderCompanionList();
 };
 
-// Toggle do Switch
 companionToggle.addEventListener('change', (e) => {
   if (e.target.checked) {
     companionNameField.classList.add('show');
@@ -80,51 +59,45 @@ companionToggle.addEventListener('change', (e) => {
   }
 });
 
-// Submissão do Formulário Principal
-form.onsubmit = (e) => {
+// LOGICA DE ENVIO PARA O BANCO DE DADOS (NEON + VERCEL)
+form.onsubmit = async (e) => {
   e.preventDefault();
-  
   const submitBtn = form.querySelector('button[type="submit"]');
   const nomeConvidado = document.getElementById('guestName').value.trim();
 
   if (!nomeConvidado) return;
 
-  // Feedback de carregamento
-  const originalText = submitBtn.textContent;
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Enviando...';
+  submitBtn.textContent = 'Enviando para o rancho...';
 
   try {
-    const guests = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    
-    const newGuest = {
-      id: Date.now(),
-      nome: nomeConvidado,
-      companionNames: [...companionNames],
-      dataRegistro: new Date().toLocaleString('pt-BR')
-    };
+    const response = await fetch('/api/guests', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: nomeConvidado,
+        companionNames: companionNames
+      })
+    });
 
-    guests.push(newGuest);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+    if (!response.ok) throw new Error('Erro na resposta do servidor');
 
-    // Sucesso
-    showMessage(`Confirmado! Esperamos você e sua comitiva, ${nomeConvidado.split(' ')[0]}! 🥩`);
-    
-    // Reset Total
+    showMessage(`Confirmado! Esperamos você, ${nomeConvidado.split(' ')[0]}! 🥩`);
     form.reset();
     companionNames = [];
     renderCompanionList();
     companionNameField.classList.remove('show');
+    companionToggle.checked = false;
     
   } catch (error) {
-    showMessage('Erro ao salvar. Tente novamente.', true);
+    showMessage('Erro ao salvar. Verifique sua conexão.', true);
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
+    submitBtn.textContent = 'Confirmar Presença';
   }
 };
 
-// --- LOGICA DO CONTADOR ---
+// CONTADOR
 function startCountdown() {
   const eventDate = new Date('2026-05-16T19:30:00-03:00').getTime();
   const format = (num) => String(num).padStart(2, '0');
@@ -149,41 +122,3 @@ function startCountdown() {
 }
 
 document.addEventListener('DOMContentLoaded', startCountdown);
-
-// ... (mantenha as funções de renderCompanionList e showMessage)
-
-form.onsubmit = async (e) => {
-  e.preventDefault();
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const nomeConvidado = document.getElementById('guestName').value.trim();
-
-  if (!nomeConvidado) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Enviando...';
-
-  try {
-    const response = await fetch('/api/guests', { // O vercel.json cuida da rota
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome: nomeConvidado,
-        companionNames: companionNames
-      })
-    });
-
-    if (!response.ok) throw new Error('Erro na resposta do servidor');
-
-    showMessage(`Confirmado! Esperamos você, ${nomeConvidado.split(' ')[0]}! 🥩`);
-    form.reset();
-    companionNames = [];
-    renderCompanionList();
-    companionNameField.classList.remove('show');
-    
-  } catch (error) {
-    showMessage('Erro ao salvar. Verifique a conexão.', true);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Confirmar Presença';
-  }
-};
