@@ -3,25 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmação de Presença</title>
+  <title>Confirmação de Presença - Churrasco do Sucegan 🤠</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Rye&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
+    <section class="card invitation-card">
+      <h2>🎸 Convite Especial 🥩</h2>
+      <p>Você está convidado para o <strong>Churrasco do Sucegan</strong>!</p>
+      <p>Chegou meus  <strong>21 anos</strong> venha comemorar comigo!</p>
+      
+      <p style="margin-top: 15px;">
+        📅 16 de maio de 2026 às 19:30<br>
+        📍 <strong>Rua Juliano Guiotti, 173</strong>
+      </p>
+      
+      <a href="https://maps.google.com/?q=Rua+Juliano+Guiotti,+173" target="_blank" class="link-button small-button" style="margin-top: 10px; margin-bottom: 15px; width: auto; display: inline-flex;">
+        🗺️ Ver no Mapa
+      </a>
+
+      <div style="background: rgba(139, 69, 19, 0.08); border: 2px dashed var(--accent); padding: 12px; border-radius: 4px; margin: 10px 0 20px 0;">
+        <p style="margin: 0; font-size: 0.95rem;">
+          <strong>🍽️ Lembrete Importante:</strong><br> 
+          Não se esqueça de trazer o seu <strong>Kit Churrasco</strong>
+        </p>
+      </div>
+      
+      <div id="countdown" class="countdown">
+        <div><span id="days">00</span>Dias</div>
+        <div><span id="hours">00</span>Horas</div>
+        <div><span id="minutes">00</span>Min.</div>
+        <div><span id="seconds">00</span>Seg.</div>
+      </div>
+    </section>
+
     <header>
-      <h1>Confirmar Presença</h1>
-      <p>Por favor, digite o seu nome para confirmar que você virá!</p>
+      <h1>Confirmar Presença 🤠</h1>
+      <p>Digite o seu nome abaixo e adicione acompanhantes se necessário.</p>
     </header>
 
     <section class="card">
       <form id="attendanceForm">
-        <input type="text" id="guestName" placeholder="Seu nome completo" required>
-        <button type="submit">Confirmar Minha Ida 🚀</button>
+        <input type="text" id="guestName" placeholder="Teu nome completo" required>
+
+        <div class="companions-choice">
+          <span>Tera  acompanhante?</span>
+          <label class="switch">
+            <input type="checkbox" id="companionToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="companion-name-field" id="companionNameField">
+          <div class="input-container">
+            <input type="text" id="companionInput" placeholder="Nome do acompanhante">
+            <button type="button" id="addCompanion" class="add-button">+</button>
+          </div>
+          <ul id="companionList" class="companion-list"></ul>
+        </div>
+
+        <button type="submit">Confirmar Presença</button>
       </form>
       <p id="msg" class="hidden"></p>
     </section>
 
-    </div>
+    <section class="card admin-link-card">
+      <a class="link-button link-button-faint" href="admin.html">Acesso Administrativo</a>
+    </section>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

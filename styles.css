@@ -1,121 +1,393 @@
-/* Reutilizando as cores do projeto anterior para combinar */
+/* =========================================
+   ESTILO COUNTRY / RÚSTICO
+   Churrasco do Sucegan 🤠
+   ========================================= */
+
 :root {
-  --bg: #060912;
-  --primary: #3ae8ff;
-  --accent: #7d5cff;
-  --text: #e8f7ff;
+  /* Paleta de Cores Terra e Couro */
+  --bg-body: #f4eade;          /* Bege Claro Papel Envelhecido */
+  --bg-card: #ffffff;
+  --primary: #8b4513;        /* SaddleBrown (Couro Selado) */
+  --primary-hover: #a0522d;   /* Sienna (Couro Mais Claro) */
+  --accent: #d2b48c;         /* Tan (Palha/Corda) */
+  --text-main: #3e2723;       /* Marrom Escuro Café */
+  --text-light: #6d4c41;
+  --danger: #b71c1c;         /* Vermelho Bandana */
+  --border-card: #d7ccc8;
+  
+  /* Fontes */
+  --font-heading: 'Rye', cursive; /* Estilo Western para Títulos */
+  --font-body: 'Lora', serif;       /* Serifada elegante para texto */
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-.container { max-width: 500px; width: 100%; }
-
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid rgba(58, 232, 255, 0.2);
-  margin-bottom: 20px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  background: #000;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
-  background: linear-gradient(to right, var(--primary), var(--accent));
-  border: none;
-  color: #000;:root {
-  --bg: #060912;
-  --primary: #3ae8ff;
-  --accent: #7d5cff;
-  --text: #e8f7ff;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-.container { max-width: 500px; width: 100%; }
-
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid rgba(58, 232, 255, 0.2);
-  margin-bottom: 20px;
-}
-
-.hidden { display: none; } /* Essencial para o painel admin oculto */
-
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  background: #000;
-  color: #fff;
-  margin-bottom: 10px;
+* {
   box-sizing: border-box;
 }
 
-button {
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
-  background: linear-gradient(to right, var(--primary), var(--accent));
-  border: none;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: opacity 0.2s;
+/* Custom Scrollbar Rústico */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 5px;
+  border: 2px solid var(--bg-body);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
-button:hover { opacity: 0.9; }
+body {
+  background-color: var(--bg-body);
+  /* Adiciona uma textura leve de papel/tecido ao fundo */
+  background-image: url('https://www.transparenttextures.com/patterns/dark-dotted.png');
+  color: var(--text-main);
+  font-family: var(--font-body);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  position: relative;
+}
 
-.attendance-list { list-style: none; padding: 0; }
+.container {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 1;
+}
 
-.guest-item {
-  padding: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 400; /* Rye não tem negrito */
+  color: var(--primary);
+  margin-top: 0;
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+strong {
+  color: #000;
+}
+
+.card {
+  background: var(--bg-card);
+  padding: 25px;
+  border-radius: 8px; /* Menos arredondado que o moderno */
+  border: 1px solid var(--border-card);
+  /* Sombra mais seca, parecendo papel sobreposto */
+  box-shadow: 3px 3px 0px rgba(139, 69, 19, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Detalhe rústico no canto do card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--primary),
+    var(--primary) 10px,
+    var(--accent) 10px,
+    var(--accent) 20px
+  );
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px rgba(139, 69, 19, 0.15);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Inputs Estilo Escrito à Mão */
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 4px;
+  border: 2px solid var(--accent);
+  background: #fff;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--primary);
+  background: #fafafa;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Companions Section */
+.companions-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+  border-radius: 4px;
+  background: #fdf8f3;
+  border: 1px solid var(--accent);
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.companions-choice span {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+/* Switch Rústico (Cores de Couro) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  transition: 0.4s; border-radius: 34px;
+}
+.slider:before {
+  position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px;
+  background: #fff; transition: 0.4s; border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+input:checked + .slider {
+  background: var(--primary);
+}
+input:checked + .slider:before { transform: translateX(24px); }
+
+/* Ajuste área de acompanhantes */
+.companion-name-field {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+}
+
+.companion-name-field.show {
+  opacity: 1;
+  max-height: 500px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-container input {
+  padding-right: 50px !important;
+}
+
+.add-button {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.add-button:hover { background: var(--primary); color: #fff; }
+
+.companion-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.companion-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 15px;
+  background: #fdf8f3;
+  border-radius: 4px;
+  border: 1px solid var(--accent);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  animation: fadeIn 0.3s ease;
 }
 
-.success-msg { color: #00ff88; margin-top: 10px; text-align: center; }
-.error-msg { color: #ff4d4d; margin-top: 10px; text-align: center; }
-  font-weight: bold;
+.remove-companion {
+  background: none; border: none; color: var(--danger);
+  font-size: 1.2rem; cursor: pointer; padding: 0; margin-left: 10px;
+}
+.remove-companion:hover { transform: scale(1.1); }
+
+/* Botões Estilo Ferradura/Carimbo */
+button, .link-button {
+  display: inline-flex; justify-content: center; align-items: center;
+  width: 100%; padding: 16px 20px; 
+  border-radius: 4px;
+  background: var(--primary);
+  border: none; 
+  color: #fff; 
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
   cursor: pointer;
+  text-decoration: none; transition: 0.2s;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+  text-transform: uppercase;
+}
+button:hover, .link-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.2);
 }
 
-.attendance-list { list-style: none; padding: 0; }
-.guest-item {
-  padding: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  justify-content: space-between;
+.link-button-faint {
+  background: #eae0d5; color: var(--primary);
+  border: 2px solid var(--accent); box-shadow: none;
+}
+.link-button-faint:hover {
+  background: var(--accent); color: var(--primary); border-color: var(--primary);
 }
 
-.success-msg { color: #00ff88; margin-top: 10px; text-align: center; }
+.small-button { width: auto; padding: 10px 18px; font-size: 0.9rem; }
+
+.danger {
+  background: var(--danger);
+}
+.danger:hover { background: #8e0000; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Invitation Card e Countdown Rústico */
+.invitation-card {
+  background-color: #fffaf0; /* FloralWhite */
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern-light.png'); /* Textura leve madeira */
+  border: 2px solid var(--primary);
+  text-align: center;
+  padding: 30px;
+}
+
+.invitation-card h2 { margin-bottom: 15px; }
+
+.countdown { display: flex; justify-content: center; gap: 8px; margin-top: 25px; flex-wrap: wrap; }
+.countdown div {
+  background: rgba(139, 69, 19, 0.05); /* Fundo marrom bem claro */
+  padding: 10px; border-radius: 4px;
+  min-width: 70px; 
+  border: 1px solid var(--accent);
+}
+.countdown span { 
+  font-family: var(--font-heading);
+  font-size: 1.8rem; 
+  color: var(--primary); 
+  display: block;
+}
+.countdown br + text { /* Texto abaixo do número */
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+
+/* Admin List */
+.admin-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;}
+.admin-summary { font-size: 0.95rem; margin-bottom: 20px; color: var(--text-light); border-left: 3px solid var(--accent); padding-left: 10px; }
+.admin-summary strong { color: var(--primary); font-size: 1.1rem; }
+
+#guestSearch { margin-bottom: 15px; border-style: dashed; }
+
+.attendance-list { list-style: none; padding: 0; margin: 0; }
+.attendance-list li {
+  background: #fff; padding: 15px; border-radius: 4px;
+  border: 1px solid var(--border-card); margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: 0.2s;
+}
+.attendance-list li:hover { background: #fdf8f3; border-color: var(--accent); }
+
+.attendance-list li strong {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+.attendance-list li small {
+  color: var(--text-light);
+  display: block;
+  margin-top: 3px;
+}
+
+.success-msg { color: #2e7d32; text-align: center; margin-top: 15px; font-weight: bold; }
+.error-msg { color: var(--danger); text-align: center; margin-top: 15px; font-weight: bold; }
+.footer-note { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 30px; opacity: 0.8; }
+
+/* Placeholder color */
+::placeholder { color: #a1887f; opacity: 0.7; }
+
+/* Responsividade */
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  .card { padding: 15px; }
+  .admin-controls { flex-direction: column; gap: 5px; }
+  .admin-controls button { width: 100%; }
+  .attendance-list li { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .attendance-list li button { width: 100%; }
+  .countdown div { min-width: 60px; padding: 8px; }
+  h1 { font-size: 1.8rem; }
+}

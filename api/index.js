@@ -44,6 +44,20 @@ app.get('/api/presenca', async (req, res) => {
   }
 });
 
+// Rota para o Admin atualizar um nome
+app.put('/api/presenca', async (req, res) => {
+  const { id, nome } = req.body;
+  if (!id || !nome) {
+    return res.status(400).json({ error: 'ID e nome são obrigatórios.' });
+  }
+  try {
+    await pool.query('UPDATE convidados SET nome = $1 WHERE id = $2', [nome, id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Rota para o Admin deletar
 app.delete('/api/presenca', async (req, res) => {
   const { id } = req.query;

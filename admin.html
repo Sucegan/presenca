@@ -9,31 +9,41 @@
 <body>
   <main class="container">
     <header>
-      <h1>Gestão de Convidados</h1>
-      <p>Insira a senha para ver quem confirmou presença.</p>
+      <h1>Gestão de Convidados 👨‍💼</h1>
     </header>
 
-    <section class="card">
-      <div class="admin-row" style="display: flex; gap: 10px;">
-        <input id="adminPassword" type="password" placeholder="Senha" aria-label="Senha" style="margin-bottom: 0;">
-        <button id="adminAccessButton" type="button" style="width: auto;">Entrar</button>
+    <section id="loginSection" class="card">
+      <h2>Acesso Restrito</h2>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <input type="password" id="adminPasswordInput" placeholder="Digite a senha">
+        <button id="loginButton" class="small-button" style="width: auto;">Entrar</button>
       </div>
-      <p id="adminMessage" class="success-msg"></p>
+      <p id="loginError" class="error-msg hidden">Senha incorreta!</p>
     </section>
 
     <section id="adminContent" class="card hidden">
-      <h2>Pessoas Confirmadas</h2>
-      <p style="margin-bottom: 15px;">Total: <strong id="guestCountDisplay">0</strong></p>
-      <ul id="adminGuestList" class="attendance-list">
-      </ul>
+      <div class="admin-controls">
+        <button id="refreshButton" type="button" class="small-button">Atualizar</button>
+        <button id="exportButton" type="button" class="small-button">Exportar CSV</button>
+        <button id="logoutButton" type="button" class="small-button danger">Sair</button>
+      </div>
+      
+      <div class="admin-summary" style="margin: 15px 0; display: flex; flex-direction: column; gap: 5px;">
+        <span>Total de registros (formulários): <strong id="guestCountDisplay">0</strong></span>
+        <span>Total geral de pessoas (com acompanhantes): <strong id="totalPeopleDisplay">0</strong></span>
+      </div>
+      
+      <input id="guestSearch" type="text" placeholder="Buscar por nome...">
+      <ul id="adminGuestList" class="attendance-list"></ul>
+      
+      <p id="adminMessage" class="hidden"></p>
     </section>
 
-    <footer>
-      <p style="text-align: center; margin-top: 20px;">
-        <a href="index.html" style="color: var(--primary); text-decoration: none;">Voltar para Confirmação</a>
-      </p>
-    </footer>
+    <section class="card admin-link-card">
+      <a class="link-button link-button-faint" href="index.html">Voltar</a>
+    </section>
   </main>
+
   <script src="admin.js"></script>
 </body>
 </html>
