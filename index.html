@@ -8,37 +8,33 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Rye&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  
 </head>
 <body>
   <div class="container">
     <section class="card invitation-card">
       <h2>🎸 Convite Especial 🥩</h2>
       <p>Você está convidado para o <strong>Churrasco do Sucegan</strong>!</p>
-      <p>Chegou meus  <strong>21 anos</strong> venha comemorar comigo!</p>
+      <p>Chegou meus <strong>21 anos</strong>, venha comemorar comigo!</p>
       
       <p style="margin-top: 15px;">
         📅 16 de maio de 2026 às 19:30<br>
         📍 <strong>Rua Juliano Guiotti, 189</strong>
       </p>
       
-      <a href="https://maps.google.com/?q=Rua+Juliano+Guiotti,+189" target="_blank" class="link-button small-button" style="margin-top: 10px; margin-bottom: 15px; width: auto; display: inline-flex;">
-        🗺️ Ver no Mapa
+      <a href="https://www.google.com/maps/search/?api=1&query=Rua+Juliano+Guiotti+189" target="_blank" class="link-button small-button" style="margin-top: 10px; margin-bottom: 15px; width: auto; display: inline-flex; text-decoration: none;">
+        🗺️ Ver no Mapa (GPS)
       </a>
 
-      
-
-        <div style="background: rgba(139, 69, 19, 0.08); border: 2px dashed var(--accent); padding: 15px; border-radius: 4px; margin: 10px 0 20px 0;">
-  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5;">
-    <strong>🍽️ Lembrete Importante:</strong><br> 
-    Não se esqueça de trazer o seu <strong>Kit Churrasco</strong>.
-  </p>
-  <p style="margin: 8px 0 0 0; font-size: 1rem; color: var(--primary);">
-    <strong>🤠 Traje Sugerido:</strong><br>
-    Prepare a bota e o chapéu! O tema é <strong>Country</strong>.
-  </p>
-</div>
-     
+      <div style="background: rgba(139, 69, 19, 0.08); border: 2px dashed var(--accent); padding: 15px; border-radius: 4px; margin: 10px 0 20px 0;">
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-main);">
+          <strong>🍽️ Lembrete Importante:</strong><br> 
+          Não se esqueça de trazer o seu <strong>Kit Churrasco</strong>.
+        </p>
+        <p style="margin: 8px 0 0 0; font-size: 1rem; color: var(--primary);">
+          <strong>🤠 Traje Sugerido:</strong><br>
+          Prepare a bota e o chapéu! O tema é <strong>Country</strong>.
+        </p>
+      </div>
       
       <div id="countdown" class="countdown">
         <div><span id="days">00</span>Dias</div>
@@ -49,7 +45,6 @@
     </section>
 
     <header>
-      
       <h1>Confirmar Presença 🤠</h1>
       <p>Digite o seu nome abaixo e adicione acompanhantes se necessário.</p>
     </header>
@@ -59,7 +54,7 @@
         <input type="text" id="guestName" placeholder="Teu nome completo" required>
 
         <div class="companions-choice">
-          <span>Tera  acompanhante?</span>
+          <span>Terá acompanhante?</span>
           <label class="switch">
             <input type="checkbox" id="companionToggle">
             <span class="slider"></span>
@@ -74,7 +69,7 @@
           <ul id="companionList" class="companion-list"></ul>
         </div>
 
-        <button type="submit">Confirmar Presença</button>
+        <button type="submit" id="submitBtn">Confirmar Presença</button>
       </form>
       <p id="msg" class="hidden"></p>
     </section>
