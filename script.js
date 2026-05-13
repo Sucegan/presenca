@@ -132,6 +132,15 @@ form.onsubmit = async (e) => {
     submitBtn.textContent = 'Confirmar Presença';
   }
 };
+
+// ENVIO PARA O BACKEND (Neon + Vercel)
+form.onsubmit = async (e) => {
+  e.preventDefault();
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const nomeConvidado = document.getElementById('guestName').value.trim();
+
+  if (!nomeConvidado) return;
+
   // Bloqueia o botão para evitar cliques duplos
   submitBtn.disabled = true;
   submitBtn.textContent = 'Enviando para o rancho...';
@@ -166,37 +175,6 @@ form.onsubmit = async (e) => {
   }
 };
 
-// CONTADOR REGRESSIVO
-function startCountdown() {
-  const eventDate = new Date('2026-05-16T19:30:00-03:00').getTime();
-  const format = (num) => String(num).padStart(2, '0');
 
-  const update = () => {
-    const now = new Date().getTime();
-    const distance = eventDate - now;
-
-    if (distance < 0) {
-      const countdownEl = document.querySelector('.countdown');
-      if(countdownEl) countdownEl.innerHTML = "<h3>O Churrasco começou! 🎸</h3>";
-      return;
-    }
-
-    // Só atualiza se os elementos existirem na página
-    const d = document.getElementById('days');
-    const h = document.getElementById('hours');
-    const m = document.getElementById('minutes');
-    const s = document.getElementById('seconds');
-
-    if (d && h && m && s) {
-        d.innerText = format(Math.floor(distance / (1000 * 60 * 60 * 24)));
-        h.innerText = format(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-        m.innerText = format(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-        s.innerText = format(Math.floor((distance % (1000 * 60)) / 1000));
-    }
-  };
-
-  update();
-  setInterval(update, 1000);
-}
 
 document.addEventListener('DOMContentLoaded', startCountdown);
