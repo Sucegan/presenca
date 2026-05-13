@@ -83,7 +83,7 @@ companionToggle.addEventListener('change', (e) => {
   }
 });
 
-// ENVIO PARA O BACKEND (Neon + Vercel)
+// LOGICA DE ENVIO PARA O BANCO DE DADOS
 form.onsubmit = async (e) => {
   e.preventDefault();
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -91,6 +91,47 @@ form.onsubmit = async (e) => {
 
   if (!nomeConvidado) return;
 
+  // NOVIDADE: Salva o acompanhante automaticamente se o campo não estiver vazio
+  const companionValue = companionInput.value.trim();
+  if (companionToggle.checked && companionValue) {
+    // Verifica se já não foi adicionado antes para não duplicar
+    if (!companionNames.includes(companionValue)) {
+      companionNames.push(companionValue);
+    }
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando para o rancho...';
+
+  try {
+    const response = await fetch('/api/guests', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: nomeConvidado,
+        companionNames: companionNames // Aqui já vai o nome extra se ele digitou
+      })
+    });
+
+    if (!response.ok) throw new Error('Erro na resposta do servidor');
+
+    showMessage(`Confirmado! Esperamos você, ${nomeConvidado.split(' ')[0]}! 🥩`);
+    
+    // Limpa tudo
+    form.reset();
+    companionNames = [];
+    renderCompanionList();
+    companionNameField.classList.remove('show');
+    companionToggle.checked = false;
+    companionInput.value = ''; // Limpa o campo de texto extra
+    
+  } catch (error) {
+    showMessage('Erro ao salvar. Verifique sua conexão.', true);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Confirmar Presença';
+  }
+};
   // Bloqueia o botão para evitar cliques duplos
   submitBtn.disabled = true;
   submitBtn.textContent = 'Enviando para o rancho...';

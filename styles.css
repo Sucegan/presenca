@@ -334,6 +334,29 @@ input:checked + .slider:before { transform: translateX(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Garante que o input e o botão fiquem sempre alinhados dentro do card */
+.input-container {
+  display: flex;
+  gap: 8px; /* Espaço entre o campo e o botão */
+  width: 100%;
+  align-items: center;
+}
+
+.input-container input {
+  flex: 1; /* Ocupa todo o espaço restante */
+  min-width: 0; /* Impede que o input force a largura para fora do card */
+  margin-bottom: 0; /* Remove margens que podem desalinhá-lo do botão */
+}
+
+.add-button {
+  width: 45px; /* Tamanho fixo para o botão + */
+  height: 45px;
+  flex-shrink: 0; /* Impede o botão de ser "esmagado" */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 /* --- Responsividade --- */
 @media (max-width: 600px) {
   body { padding: 10px; }
